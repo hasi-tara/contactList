@@ -8,7 +8,6 @@ function App() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   
-  // تابع برای اضافه کردن یک مخاطب جدید به لیست مخاطبین
   const addContact = (newContact) => {
     setContacts([...contacts, newContact]);
   };
@@ -23,7 +22,7 @@ function App() {
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
   };
-  // تابع برای ارسال فرم و اضافه کردن مخاطب جدید
+
   const submitForm = (e) => {
     e.preventDefault();
     if (name !== '' && phoneNumber !== '' && email !== '') {

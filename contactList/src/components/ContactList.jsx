@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 function ContactList({ contacts }) {
   const [searchTerm, setSearchTerm] = useState('');
 
-  // تابع برای جستجو در لیست مخاطبین
   const filteredContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
