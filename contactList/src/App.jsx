@@ -1,62 +1,57 @@
-
-import { useState } from "react";
-import Form from "./components/Form";
-import StudentList from "./components/StudentsList";
-
+import React, { useState } from 'react';
+import ContactForm from './components/ContactForm';
+import ContactList from './components/ContactList';
+import './styles/styles.css'
 function App() {
-  const [value, setValue] = useState("");
-  const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [students, setStudents] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-
-  const inputChangeHandler = (value) => {
-    setValue(value);
+  const [contacts, setContacts] = useState([]);
+  const [name, setName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  
+  // تابع برای اضافه کردن یک مخاطب جدید به لیست مخاطبین
+  const addContact = (newContact) => {
+    setContacts([...contacts, newContact]);
+  };
+  const handleNameChange = (e) => {
+    setName(e.target.value);
   };
 
-  const emailChangeHandler = (email) => {
-    setEmail(email);
+  const handlePhoneNumberChange = (e) => {
+    setPhoneNumber(e.target.value);
   };
 
-  const phoneNumberChangeHandler = (phoneNumber) => {
-    setPhoneNumber(phoneNumber);
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
-
-  const submitFormHandler = (e) => {
+  // تابع برای ارسال فرم و اضافه کردن مخاطب جدید
+  const submitForm = (e) => {
     e.preventDefault();
-    if (value.trim()) {
-      setStudents([
-        ...students,
-        { id: students.length + 1, name: value, email, phoneNumber },
-      ]);
-      setValue("");
-      setEmail("");
-      setPhoneNumber("");
-    } else {
-      alert("Please enter a name");
+    if (name !== '' && phoneNumber !== '' && email !== '') {
+      const newContact = {
+        name,
+        phoneNumber,
+        email
+      };
+      addContact(newContact);
+      setName('');
+      setPhoneNumber('');
+      setEmail('');
     }
   };
-
-  const searchHandler = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
+  
   return (
     <div>
-      <Form
-        submitFormHandler={submitFormHandler}
-        inputChangeHandler={inputChangeHandler}
-        emailChangeHandler={emailChangeHandler}
-        phoneNumberChangeHandler={phoneNumberChangeHandler}
-        value={value}
-        email={email}
-        phoneNumber={phoneNumber}
-        searchHandler={searchHandler}
-        searchTerm={searchTerm}
-      />
-      <StudentList students={students} searchTerm={searchTerm} />
+      <h1>Contact List</h1>
+      <ContactForm 
+      submitForm={submitForm}
+      handleEmailChange={handleEmailChange}
+      handleNameChange={handleNameChange}
+      handlePhoneNumberChange={handlePhoneNumberChange}
+      addContact={addContact} />
+      <ContactList contacts={contacts} />
     </div>
   );
 }
+
 
 export default App;
